@@ -27,8 +27,6 @@ app.use((err, req, res, next) => {
         statusCode,
         message
     });
-
-    next();
 });
 
 app.listen(3000, () => {
