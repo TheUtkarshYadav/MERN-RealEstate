@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 
 const Navs = () => {
     const { currentUser } = useSelector(state => state.user);
+    console.log(currentUser.avatar);
 
     return (
         <ul className="flex gap-10">
