@@ -11,7 +11,7 @@ import { app } from '../firebase.js';
 
 export default function CreateListing() {
     const { currentUser } = useSelector(state => state.user);
-    const navigate=useNavigate();
+    const navigate = useNavigate();
 
     const [files, setFiles] = useState([]);
     const [formData, setFormData] = useState({
@@ -300,7 +300,9 @@ export default function CreateListing() {
                             />
                             <div className='flex flex-col items-center'>
                                 <p>Regular Price</p>
-                                <span className='text-xs'>($ / month)</span>
+                                {formData.type === 'rent' &&
+                                    (<span className='text-xs'>($ / month)</span>)
+                                }
                             </div>
                         </div>
 
@@ -319,7 +321,9 @@ export default function CreateListing() {
 
                                 <div className='flex flex-col items-center'>
                                     <p>Discounted Price</p>
-                                    <span className='text-xs'>($ / month)</span>
+                                    {formData.type === 'rent' &&
+                                        (<span className='text-xs'>($ / month)</span>)
+                                    }
                                 </div>
                             </div>
                         )}
