@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import ListingCard from '../components/ListingCard';
 
 export default function Search() {
     const navigate = useNavigate();
@@ -15,6 +16,8 @@ export default function Search() {
         sort: 'created_at',
         order: 'desc',
     });
+
+    console.log(listings);
 
     useEffect(() => {
         const urlParams = new URLSearchParams(location.search);
@@ -51,6 +54,7 @@ export default function Search() {
 
             const res = await fetch(`/api/listing/get?${searchQuery}`);
             const data = await res.json();
+
             setListings(data);
             setLoading(false);
         }
@@ -60,9 +64,11 @@ export default function Search() {
     }, [location.search]);
 
     const handleChange = (e) => {
-        if (e.target.id === 'all' ||
+        if (
+            e.target.id === 'all' ||
             e.target.id === 'rent' ||
-            e.target.id === 'sale') {
+            e.target.id === 'sale'
+        ) {
             setSideBarData({
                 ...sideBarData,
                 type: e.target.id
@@ -76,7 +82,11 @@ export default function Search() {
             });
         }
 
-        if (e.target.id === 'parking' || e.target.id === 'furnished' || e.target.id === 'offer') {
+        if (
+            e.target.id === 'parking' ||
+            e.target.id === 'furnished' ||
+            e.target.id === 'offer'
+        ) {
             setSideBarData({
                 ...sideBarData,
                 [e.target.id]: e.target.checked || e.target.checked === 'true' ? true : false
@@ -219,8 +229,21 @@ export default function Search() {
                 </form>
             </div>
 
-            <div className="">
+            <div className="flex-1">
                 <h1 className='text-3xl font-semibold font-serif border-b p-3 mt-5 text-slate-700'>Listing Results:</h1>
+                <div className="flex flex-wrap gap-4 p-7">
+                    {!loading && listings.length === 0 && (
+                        <p className='text-3xl text-red-500 text-center w-full font-serif'>No Listings Available!</p>
+                    )}
+
+                    {loading && (
+                        <p className='text-2xl text-violet-400 text-center w-full font-serif'>Loading...</p>
+                    )}
+
+                    {!loading && listings && listings.map((listing) =>
+                        <ListingCard key={listing._id} listing={listing} />
+                    )}
+                </div>
             </div>
         </div>
     )
