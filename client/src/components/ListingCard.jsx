@@ -6,7 +6,7 @@ export default function ListingCard({ listing }) {
         <div className="bg-white shadow-md w-full sm:w-[330px] hover:shadow-lg transition-shadow overflow-hidden rounded-lg">
             <Link to={`/listing/${listing._id}`}>
                 <img
-                    src={listing.imageUrls[0]}
+                    src={listing.imageUrls[0] || 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScUJiZNj0IHwnmh5QkJ4ifUMAR3rlBQrBDhVPS1u-WbyDgMjHPJed6_8ySCY7guNLPgg4&usqp=CAU'}
                     alt="Listing Cover"
                     className="h-[320px] sm:h-[220px] w-full object-cover hover:scale-105 transition-scale duration-300"
                 />
