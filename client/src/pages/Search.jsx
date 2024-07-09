@@ -14,7 +14,7 @@ export default function Search() {
         parking: false,
         furnished: false,
         offer: false,
-        sort: 'created_at',
+        sort: 'createdAt',
         order: 'desc',
     });
     console.log(listings);
@@ -90,8 +90,7 @@ export default function Search() {
 
         if (
             e.target.id === 'parking' ||
-            e.target.id === 'furnished' ||
-            e.target.id === 'offer'
+            e.target.id === 'furnished'
         ) {
             setSideBarData({
                 ...sideBarData,
@@ -109,23 +108,40 @@ export default function Search() {
                 order,
             });
         }
+
+        if (e.target.id === 'offer') {
+            if (e.target.checked || e.target.checked === 'true') {
+                setSideBarData({
+                    ...sideBarData,
+                    [e.target.id]: true
+                });
+            } else {
+                setSideBarData({
+                    ...sideBarData,
+                    sort: 'regularPrice',
+                    [e.target.id]: false
+                });
+            }
+        }
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         const urlParams = new URLSearchParams();
-        urlParams.set('searchTerm', sideBarData.searchTerm);
-        urlParams.set('type', sideBarData.type);
-        urlParams.set('parking', sideBarData.parking);
-        urlParams.set('furnished', sideBarData.furnished);
-        urlParams.set('offer', sideBarData.offer);
+
+        if (sideBarData.searchTerm) urlParams.set('searchTerm', sideBarData.searchTerm);
+        if (sideBarData.type !== 'all') urlParams.set('type', sideBarData.type);
+        if (sideBarData.parking) urlParams.set('parking', sideBarData.parking);
+        if (sideBarData.furnished) urlParams.set('furnished', sideBarData.furnished);
+        if (sideBarData.offer) urlParams.set('offer', sideBarData.offer);
         urlParams.set('sort', sideBarData.sort);
         urlParams.set('order', sideBarData.order);
 
         const searchQuery = urlParams.toString();
         navigate(`/search?${searchQuery}`);
     };
+
 
     const onShowMoreClick = async () => {
         const numberOfListings = listings.length;
@@ -240,9 +256,9 @@ export default function Search() {
 
                     <div className="flex items-center gap-2">
                         <label className='font-semibold'>Sort :</label>
-                        <select onChange={handleChange} defaultValue={'created_at_desc'} id="sort_order" className='border rounded-lg p-2'>
-                            <option value={'regularPrice_desc'}>Price High to Low</option>
-                            <option value={'regularPrice_asc'}>Price Low to High</option>
+                        <select onChange={handleChange} defaultValue={'createdAt_desc'} id="sort_order" className='border rounded-lg p-2'>
+                            <option value={'discountPrice_desc'}>Price High to Low</option>
+                            <option value={'discountPrice_asc'}>Price Low to High</option>
                             <option value={'createdAt_desc'}>Latest</option>
                             <option value={'createdAt_asc'}>Oldest</option>
                         </select>

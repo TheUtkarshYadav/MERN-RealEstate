@@ -115,14 +115,18 @@ export default function Listing() {
                         </p>
 
                         <div className='flex gap-4'>
-                            <p className='bg-red-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
+                            <p className='flex items-center justify-center bg-red-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
                                 {listing.type === 'rent' ? 'For Rent' : 'For Sale'}
                             </p>
 
                             {listing.offer ? (
-                                <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
-                                    $ {listing.discountPrice.toLocaleString('en-US')}
-                                    {listing.type === 'rent' && ' / month'}
+                                <p className='flex items-center justify-center bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>
+                                    <div className="flex items-center justify-center">
+                                        $
+                                        <p className='line-through mx-1'>{listing.regularPrice.toLocaleString('en-US')}</p>
+                                        <p>{listing.discountPrice.toLocaleString('en-US')}</p>
+                                    </div>
+                                    <p className='m-1'>{listing.type === 'rent' && '/ month'}</p>
                                 </p>
                             ) : (
                                 <p className='bg-green-900 w-full max-w-[200px] text-white text-center p-1 rounded-md'>

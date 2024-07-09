@@ -20,11 +20,16 @@ export default function ListingCard({ listing }) {
                     </div>
 
                     <p className="text-sm text-gray-600 line-clamp-2">{listing.description}</p>
-                    <p className="text-slate-500 mt-2 font-semibold">
-                        ${listing.offer ?
-                            listing.discountPrice.toLocaleString('en-US') : listing.regularPrice.toLocaleString('en-US')
+                    <p className="flex items-center text-slate-500 mt-2 font-semibold">
+                        ${listing.offer ? (
+                            <p className="flex items-center justify-center">
+                                <p className='line-through mx-1'>{listing.regularPrice.toLocaleString('en-US')}</p>
+                                <p>{listing.discountPrice.toLocaleString('en-US')}</p>
+                            </p>
+                        ) : 
+                            listing.regularPrice.toLocaleString('en-US')
                         }
-                        {listing.type === 'rent' && ' / month'}
+                        <p className="m-1">{listing.type === 'rent' && '/ month'}</p>
                     </p>
 
                     <div className="flex gap-4 text-slate-700">
