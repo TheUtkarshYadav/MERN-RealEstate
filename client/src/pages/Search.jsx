@@ -99,7 +99,7 @@ export default function Search() {
         }
 
         if (e.target.id === 'sort_order') {
-            const sort = e.target.value.split('_')[0] || 'created_at';
+            let sort = e.target.value.split('_')[0] || 'created_at';
             const order = e.target.value.split('_')[1] || 'desc';
 
             setSideBarData({
