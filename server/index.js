@@ -8,7 +8,6 @@ import authRouter from "./routes/auth.route.js";
 import listingRouter from "./routes/listing.route.js";
 
 dotenv.config();
-const app = express();
 
 mongoose.connect(process.env.MONGO).then(() => {
     console.log(`Connected to MongoDB successfully!`);
@@ -16,6 +15,7 @@ mongoose.connect(process.env.MONGO).then(() => {
     console.log(err);
 });
 
+const app = express();
 const __dirname = path.resolve();
 
 app.use(express.json());
@@ -28,8 +28,8 @@ app.use("/api/listing", listingRouter);
 app.use(express.static(path.join(__dirname, '/client/dist')));
 
 app.get('*', (req, res) => {
-    res.sendFile(path.join(__dirname, '/client/dist/index.js'));
-})
+    res.sendFile(path.join(__dirname, 'client', 'dist', 'index.html'));
+});
 
 app.use((err, req, res, next) => {
     const statusCode = err.statusCode || 500;
@@ -44,4 +44,4 @@ app.use((err, req, res, next) => {
 
 app.listen(3000, () => {
     console.log(`Server started running successfully on port 3000.`);
-})
+});
