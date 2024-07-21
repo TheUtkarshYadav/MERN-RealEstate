@@ -9,7 +9,7 @@ import listingRouter from "./routes/listing.route.js";
 
 dotenv.config();
 
-mongoose.connect(process.env.MONGO).then(() => {
+mongoose.connect(process.env.MONGO, { serverSelectionTimeoutMS: 30000 }).then(() => {
     console.log(`Connected to MongoDB successfully!`);
 }).catch((err) => {
     console.log(err);
